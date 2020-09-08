@@ -1,0 +1,7 @@
+Resolution:
+800px x 400px
+
+
+Spotify 
+Client ID: b000185dc27e4c599c44db4104ba8d5d
+Secret ID: 2a9f959e43184efc9cd38be321e01fc3

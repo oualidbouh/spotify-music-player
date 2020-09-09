@@ -2,24 +2,37 @@ const express = require('express');
 const app = express();
 const log = console.log;
 const spotifyClient = require('./service/spotifyClient');
-
-const baseURL = 'https://accounts.spotify.com/';
+const session = require('express-session');
 
 
 app.listen(9000,()=>{
     log('app listning to port 9000');
 });
 
-app.get('/',(req,res)=>{
+app.use(session({
+    secret: 'fiverr',
+    code: '',
+    access_token: '',
+}));
 
-});
-//d35e8b8c8e1e468f95462ac8aa3d9867
-app.get('/callback',(req,res)=>{
+app.get('/callback',(req)=>{
+    req.session.code = req.query.code;
     console.log(req.query.code);
-    spotifyClient.getAcessToken(req.query.code).then(res => {
-        console.log(res);
+    spotifyClient.accessToken(req.query.code).then(token => {
+        console.log(token.data.expires_in);
+        req.session.access_token = token.data.access_token;
+        req.session.refresh_token = token.data.refresh_token;
     }).catch(err=>{
-        console.log('##############')
         console.error(err);
-    })
+    });
+
+    setInterval(()=>{
+        spotifyClient.refreshToken(req.session.refresh_token).then((token) => {
+            console.log(token.data.expires_in);
+            req.session.access_token = token.data.access_token;
+            console.log('token refreshed...')
+        }).catch(err=>{
+            console.error(err);
+        });
+    }, 1_800_00);
 });

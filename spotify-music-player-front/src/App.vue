@@ -66,9 +66,7 @@
                                 style="padding: 1rem 1rem !important;  background: rgba(255, 255, 255, 0.5); margin-bottom: 0rem !important; ">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        
-                                        //SPOTIFY WEB PLAYER
-
+                                        <MusicPlayer/>
                                     </div>
                                 </div>
                             </div>
@@ -88,10 +86,11 @@
 </template>
 
 <script>
-
+import MusicPlayer from './components/MusicPlayer'
 export default {
   name: 'App',
   components: {
+      MusicPlayer
   },
   data(){
     return{
@@ -154,6 +153,7 @@ export default {
 
     @import url("https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css");
     @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+    @import url("https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-foundation.min.css");
     @import "../css/responsive_background.css";
     @import "../css/fullscreennavigation.css";
     

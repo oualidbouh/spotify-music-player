@@ -1,2 +1,2 @@
-spotify-music-player-backend/node-modules/*
-spotify-music-player-front/node-modules/*
+./spotify-music-player-backend/node_modules/
+./spotify-music-player-front/node_modules/

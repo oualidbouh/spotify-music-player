@@ -20,7 +20,7 @@
                                     <div class="container-fluid">
                                         <div class="row" style="margin-bottom: 2rem;">
                                             <div class="col-sm-12 text-center">
-                                                <h1 style="color: white; font-size: 3rem;">MENU</h1>
+                                                <h1 style="color: white; font-size: 3rem;">MENUUUU</h1>
                                             </div>
                                         </div>
                                         <div class="row">

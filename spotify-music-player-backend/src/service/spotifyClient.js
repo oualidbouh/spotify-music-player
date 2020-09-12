@@ -8,7 +8,7 @@ const client = axios.create({
 module.exports = {
 
     getCurrentlyPlayingTrack(access_token){
-        return client.get('/v1/me/player/currently-playing', {headers:{'Authorization': `Bearer ${access_token}`}});
+        return client.get('/v1/me/player', {headers:{'Authorization': `Bearer ${access_token}`}});
     },    
     getCurrentDevice(access_token){
         return client.get('/v1/me/player/devices', {headers:{'Authorization': `Bearer ${access_token}`}});
@@ -25,10 +25,10 @@ module.exports = {
     pause(access_token){
         return client.put('/v1/me/player/pause', {},{headers:{'Authorization': `Bearer ${access_token}`}});
     },
-    shuffle(access_token){
-        return client.post('/v1/me/player/shuffle', {},{headers:{'Authorization': `Bearer ${access_token}`}});
+    shuffle(access_token, status){
+        return client.put('/v1/me/player/shuffle?state='+status, {},{headers:{'Authorization': `Bearer ${access_token}`}});
     },
-    repeate(access_token, context){
-        return client.put('/v1/me/player/repeat?context='+ context,{}, {headers:{'Authorization': `Bearer ${access_token}`}});
+    repeate(access_token, status){
+        return client.put('/v1/me/player/repeat?state='+ status, {}, {headers:{'Authorization': `Bearer ${access_token}`}});
     }
 }

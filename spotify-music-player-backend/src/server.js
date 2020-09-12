@@ -49,6 +49,7 @@ app.get('/callback', (req, res)=>{
 
 app.get('/currently-playing', (req, res)=>{
     console.error('Current music');
+    console.log(access_token)
     spotifyClient.getCurrentlyPlayingTrack(access_token).then(response => {
         res.send(response.data);
     }).catch(err=>{
@@ -57,11 +58,9 @@ app.get('/currently-playing', (req, res)=>{
 });
 
 app.get('/current-device', (req, res)=>{
-    console.error('Current music');
     spotifyClient.getCurrentDevice(access_token).then(response => {
-        log(response.data.devices);
         let devices = _.filter(response.data.devices, {is_active : true})
-        res.send(devices);
+        res.send(devices[0]);
     }).catch(err=>{
         console.error(err);
     });
@@ -89,6 +88,7 @@ app.get('/action',(req,res)=>{
             spotifyClient.next(access_token).then((response)=>{
                 res.send(response);
             }).catch(err=>{
+                console.log(err);
                 res.send(err);
             });
             break;
@@ -96,6 +96,7 @@ app.get('/action',(req,res)=>{
             spotifyClient.previous(access_token).then((response)=>{
                 res.send(response);
             }).catch(err=>{
+                console.log(err);
                 res.send(err);
             });
             break;
@@ -103,6 +104,7 @@ app.get('/action',(req,res)=>{
             spotifyClient.play(access_token).then((response)=>{
                 res.send(response);
             }).catch(err=>{
+                console.log(err);
                 res.send(err);
             });
             break;
@@ -110,24 +112,27 @@ app.get('/action',(req,res)=>{
                 spotifyClient.pause(access_token).then((response)=>{
                     res.send(response);
                 }).catch(err=>{
-                    res.send(err);
+                    console.log(err);
+                    res.status(500).send(err);
                 });
                 break;
         case 'shuffle':
-            spotifyClient.flush(access_token).then((response)=>{
-                res.send(response);
+            spotifyClient.shuffle(access_token, req.query.status).then(()=>{
+                res.send();
             }).catch(err=>{
-                res.send(err);
+                console.log(err);
+                res.status(500).send(err);
             });
             break;
-        case 'repeate' :
-            spotifyClient.repeate(access_token,req.query.context).then((response)=>{
-                res.send(response);
+        case 'repeat' :
+            spotifyClient.repeate(access_token,req.query.status).then(()=>{
+                res.send();
             }).catch(err=>{
-                res.send(err);
+                res.status(500).send(err);
             });
             break;
-        default : console.log('no action matched...');
+        default : res.status(405);
+
     }
 })
 

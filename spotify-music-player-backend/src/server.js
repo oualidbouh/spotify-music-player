@@ -1,15 +1,26 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
+const session = require('express-session');
 const log = console.log;
+const _ = require('lodash')
+
 const authorizationClient = require('./service/authorizationClient');
 const spotifyClient = require('./service/spotifyClient');
-const session = require('express-session');
+
 
 global.access_token = '';
 
 app.listen(9000,()=>{
     log('app listning to port 9000');
 });
+
+var corsOptions = {
+    origin: 'http://localhost:8080',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+app.use(cors(corsOptions));
 
 app.use(session({
     secret: 'fiverr',
@@ -40,6 +51,17 @@ app.get('/currently-playing', (req, res)=>{
     console.error('Current music');
     spotifyClient.getCurrentlyPlayingTrack(access_token).then(response => {
         res.send(response.data);
+    }).catch(err=>{
+        console.error(err);
+    });
+});
+
+app.get('/current-device', (req, res)=>{
+    console.error('Current music');
+    spotifyClient.getCurrentDevice(access_token).then(response => {
+        log(response.data.devices);
+        let devices = _.filter(response.data.devices, {is_active : true})
+        res.send(devices);
     }).catch(err=>{
         console.error(err);
     });

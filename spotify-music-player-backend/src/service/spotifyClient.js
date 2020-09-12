@@ -9,8 +9,10 @@ module.exports = {
 
     getCurrentlyPlayingTrack(access_token){
         return client.get('/v1/me/player/currently-playing', {headers:{'Authorization': `Bearer ${access_token}`}});
+    },    
+    getCurrentDevice(access_token){
+        return client.get('/v1/me/player/devices', {headers:{'Authorization': `Bearer ${access_token}`}});
     },
-
     next(access_token){
         return client.post('/v1/me/player/next', {},{headers:{'Authorization': `Bearer ${access_token}`}});
     },

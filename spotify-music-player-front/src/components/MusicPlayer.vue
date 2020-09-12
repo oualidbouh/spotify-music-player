@@ -1,79 +1,41 @@
 <template>
-   <div id="muscic-player-container" class="row">
-       <div id="image-container" class="col-lg-4">
-            <img src="http://www.laurentrieppi.com/wp-content/uploads/2011/02/californication1.jpg" width="350" height="350" id="music-cover">
-       </div>
-       <div class="col-lg-8" id="music-info">
-           <div id="music-player-info">
-            <div class="row music-info">
-                <i class="fa fa-music"></i>           
-                <span>Red Hot Chilie pepper</span>
-            </div>
-            <div class="row music-info">
-               <i class="fa fa-user"></i>
-                <span class="txt">Red Hot Chilie pepper</span>
-            </div>
-            <div class="row music-info">
-              <i class="fa fa-laptop"></i>
-                <span>Red Hot Chilie pepper</span>
-            </div>
-       </div>
-        <div class="music-player-buttons">
-            <div class="row">
-                <div class="col-lg-2">
-                    <i class="fa fa-random"></i>
-                </div>
-                <div class="col-lg-2">
-                    <i class="fa fa-backward"></i>
-                </div>
-                <div class="col-lg-2">
-                    <i class="fa fa-play"></i>
-                </div>
-                <div class="col-lg-2">
-                    <i class="fa fa-forward"></i>
-                </div>
-                <div class="col-lg-2">
-                    <i class="fa fa-repeat"></i>
-                </div>
+<div id="muscic-player-container" class="row">
+    <div class="row center-bloc">
+        <div id="image-container" class="col-lg-4">
+            <img src="http://www.laurentrieppi.com/wp-content/uploads/2011/02/californication1.jpg" id="music-cover">
+        </div>
+        <div class="col-lg-8">
+            <div class="col music-player-info">
+                <table class="music-info">
+                    <tr>
+                        <td colspan="1"><i class="fa fa-music"></i></td>
+                        <td colspan="4"><span class="font-weight-bold">Red Hot Chilie pepper</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"><i class="fa fa-user"></i></td>
+                        <td colspan="4"><span>Red Hot Chilie pepper</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"><i class="fa fa-laptop"></i></td>
+                        <td colspan="4"><span>Red Hot Chilie pepper</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="w-25"><i class="fa fa-random"></i></td>
+                        <td class="w-25"><i class="fa fa-backward"></i></td>
+                        <td class="w-25"><i class="fa fa-play"></i></td>
+                        <td class="w-25"><i class="fa fa-forward"></i></td>
+                        <td class="w-25"><i class="fa fa-repeat"></i></td>
+                    </tr>
+                </table>
             </div>
         </div>
-       </div>
-   </div>
+    </div>
+</div>
 </template>
-
-<script>
-export default {
-      name: "MusicPlayer"
-}
-</script>
-
-<style>
-#muscic-player-container{
-    background-color: grey;
-    height: 600px;
-}
-
-#image-container{
-    padding-top: 80px;
-}
-
-#music-info{
-    padding-top: 80px;   
-}
-
-#music-cover{
-max-width:100%;
-max-height:100%;
-}
-
-.music-info{
-    padding: 15px;
-    color: white;
-    font-size: 40px;
-    font-family :sans-serif;
-}
-.music-player-buttons{
-    color: white;
-    font-size: 30px;
-}
-</style>

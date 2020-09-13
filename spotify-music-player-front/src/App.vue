@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col-md-2">
                         <div id="myNav" class="overlay">
-                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="javascript:void(0)" class="closebtn" v-on:click="closeNav">&times;</a>
                             <div class="overlay-content">
                                 <div class="container-fluid">
                                     <div class="row" style="margin-bottom: 2rem;">
@@ -41,7 +41,7 @@
                             </div>
                         </div>
                         <h1 style="font-size:30px;cursor:pointer; color: white;">
-                            <span v:on-click="openNav()">Menu</span>
+                            <span v-on:click="openNav">Menu</span>
                         </h1>
 
                     </div>
@@ -59,7 +59,7 @@
                 <div class="row">
                     <div class="container-fluid">
                         <div class="col-sm-12 main-player-container">
-                            <MusicPlayer/>
+                            <MusicPlayer />
                         </div>
                     </div>
                     <div class="container-fluid" style="margin-top: 0.5em;">
@@ -133,11 +133,10 @@ export default {
     },
     methods: {
         openNav: function () {
-            alert('test');
-            // document.getElementById("myNav").style.height = "100%";
+            document.getElementById("myNav").style.height = "100%";
         },
         closeNav: function () {
-            //document.getElementById("myNav").style.height = "0%";
+            document.getElementById("myNav").style.height = "0%";
         }
     }
 }

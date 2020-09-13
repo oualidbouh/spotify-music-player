@@ -29,6 +29,13 @@ app.use(session({
     path: '/'
 }));
 
+app.get('/', (req, res) => {
+    let url = 'https://accounts.spotify.com/fr/authorize?client_id=' +
+        req.query.clientId +
+        '&response_type=code&redirect_uri=http:%2F%2Flocalhost:9000%2Fcallback%2F&scope=user-read-currently-playing%20user-read-playback-position%20user-read-private%20user-read-email%20playlist-read-private%20user-library-read%20user-library-modify%20user-top-read%20playlist-read-collaborative%20playlist-modify-public%20playlist-modify-private%20user-follow-read%20user-follow-modify%20user-read-playback-state%20user-modify-playback-state%20user-read-recently-played';
+    res.redirect(url);
+});
+
 app.get('/callback', async(req, res) => {
     req.session.code = req.query.code;
     console.log(req.query.code);
@@ -147,7 +154,4 @@ app.get('/action', (req, res) => {
             res.status(405);
 
     }
-})
-
-//user-read-currently-playing%20user-read-playback-position%20user-read-private%20user-read-email%20playlist-read-private%20user-library-read%20user-library-modify%20user-top-read%20playlist-read-collaborative%20playlist-modify-public%20playlist-modify-private%20user-follow-read%20user-follow-modify%20user-read-playback-state%20user-modify-playback-state%20user-read-recently-played
-//https://accounts.spotify.com/fr/authorize?client_id=d35e8b8c8e1e468f95462ac8aa3d9867&response_type=code&redirect_uri=http:%2F%2Flocalhost:9000%2Fcallback%2F&scope=user-read-currently-playing%20user-read-playback-position%20user-read-private%20user-read-email%20playlist-read-private%20user-library-read%20user-library-modify%20user-top-read%20playlist-read-collaborative%20playlist-modify-public%20playlist-modify-private%20user-follow-read%20user-follow-modify%20user-read-playback-state%20user-modify-playback-state%20user-read-recently-played
+});

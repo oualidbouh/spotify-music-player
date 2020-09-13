@@ -38,7 +38,6 @@ app.get('/', (req, res) => {
 
 app.get('/callback', async(req, res) => {
     req.session.code = req.query.code;
-    console.log(req.query.code);
     authorizationClient.accessToken(req.query.code).then(token => {
         req.session.access_token = token.data.access_token;
         req.session.refresh_token = token.data.refresh_token;
@@ -55,8 +54,6 @@ app.get('/callback', async(req, res) => {
 });
 
 app.get('/currently-playing', (req, res) => {
-    console.error('Current music');
-    console.log(access_token)
     spotifyClient.getCurrentlyPlayingTrack(access_token).then(response => {
         res.send(response.data);
     }).catch(err => {
@@ -85,7 +82,6 @@ app.get('/tracker-cover', (req, res) => {
 async function refreshToken(req) {
     setInterval(() => {
         authorizationClient.refreshToken(req.session.refresh_token).then((token) => {
-            console.log(token.data.expires_in);
             req.session.access_token = token.data.access_token;
             req.session.save(function(err) {
                 // session saved
@@ -102,21 +98,20 @@ app.get('/action', (req, res) => {
     switch (req.query.action) {
         case 'next':
             spotifyClient.next(access_token).then((response) => {
-                res.send(response);
+                res.send(response.data || {});
             }).catch(err => {
                 res.status(500).send(err);
             });
             break;
         case 'previous':
             spotifyClient.previous(access_token).then((response) => {
-                res.send(response);
+                res.send(response.data || {});
             }).catch(err => {
                 res.status(500).send(err);
             });
             break;
         case 'play':
             spotifyClient.play(access_token).then((responseData) => {
-                console.log(responseData.data);
                 res.send(responseData.data || {});
             }).catch(err => {
                 res.status(500).send(err);
@@ -124,7 +119,6 @@ app.get('/action', (req, res) => {
             break;
         case 'pause':
             spotifyClient.pause(access_token).then((responseData) => {
-                console.log(responseData.data);
                 res.send(responseData.data || {});
             }).catch(err => {
                 res.status(500).send(err);

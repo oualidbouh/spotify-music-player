@@ -1,15 +1,26 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
+const session = require('express-session');
 const log = console.log;
+const _ = require('lodash')
+
 const authorizationClient = require('./service/authorizationClient');
 const spotifyClient = require('./service/spotifyClient');
-const session = require('express-session');
+
 
 global.access_token = '';
 
 app.listen(9000,()=>{
     log('app listning to port 9000');
 });
+
+var corsOptions = {
+    origin: 'http://localhost:8080',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+app.use(cors(corsOptions));
 
 app.use(session({
     secret: 'fiverr',
@@ -38,8 +49,18 @@ app.get('/callback', (req, res)=>{
 
 app.get('/currently-playing', (req, res)=>{
     console.error('Current music');
+    console.log(access_token)
     spotifyClient.getCurrentlyPlayingTrack(access_token).then(response => {
         res.send(response.data);
+    }).catch(err=>{
+        console.error(err);
+    });
+});
+
+app.get('/current-device', (req, res)=>{
+    spotifyClient.getCurrentDevice(access_token).then(response => {
+        let devices = _.filter(response.data.devices, {is_active : true})
+        res.send(devices[0]);
     }).catch(err=>{
         console.error(err);
     });
@@ -67,6 +88,7 @@ app.get('/action',(req,res)=>{
             spotifyClient.next(access_token).then((response)=>{
                 res.send(response);
             }).catch(err=>{
+                console.log(err);
                 res.send(err);
             });
             break;
@@ -74,6 +96,7 @@ app.get('/action',(req,res)=>{
             spotifyClient.previous(access_token).then((response)=>{
                 res.send(response);
             }).catch(err=>{
+                console.log(err);
                 res.send(err);
             });
             break;
@@ -81,6 +104,7 @@ app.get('/action',(req,res)=>{
             spotifyClient.play(access_token).then((response)=>{
                 res.send(response);
             }).catch(err=>{
+                console.log(err);
                 res.send(err);
             });
             break;
@@ -88,24 +112,27 @@ app.get('/action',(req,res)=>{
                 spotifyClient.pause(access_token).then((response)=>{
                     res.send(response);
                 }).catch(err=>{
-                    res.send(err);
+                    console.log(err);
+                    res.status(500).send(err);
                 });
                 break;
         case 'shuffle':
-            spotifyClient.flush(access_token).then((response)=>{
-                res.send(response);
+            spotifyClient.shuffle(access_token, req.query.status).then(()=>{
+                res.send();
             }).catch(err=>{
-                res.send(err);
+                console.log(err);
+                res.status(500).send(err);
             });
             break;
-        case 'repeate' :
-            spotifyClient.repeate(access_token,req.query.context).then((response)=>{
-                res.send(response);
+        case 'repeat' :
+            spotifyClient.repeate(access_token,req.query.status).then(()=>{
+                res.send();
             }).catch(err=>{
-                res.send(err);
+                res.status(500).send(err);
             });
             break;
-        default : console.log('no action matched...');
+        default : res.status(405);
+
     }
 })
 

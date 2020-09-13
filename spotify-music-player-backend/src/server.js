@@ -47,7 +47,7 @@ app.get('/callback', async(req, res) => {
             console.log('session saved...');
         });
     }).catch(err => {
-        console.error(err);
+        res.status(500).send(err);
     });
 
     await refreshToken(req);
@@ -58,10 +58,9 @@ app.get('/currently-playing', (req, res) => {
     console.error('Current music');
     console.log(access_token)
     spotifyClient.getCurrentlyPlayingTrack(access_token).then(response => {
-        console.log()
         res.send(response.data);
     }).catch(err => {
-        console.error(err);
+        res.status(500).send(err);
     });
 });
 
@@ -70,7 +69,7 @@ app.get('/current-device', (req, res) => {
         let devices = _.filter(response.data.devices, { is_active: true })
         res.send(devices[0]);
     }).catch(err => {
-        console.error(err);
+        res.status(500).send(err);
     });
 });
 
@@ -94,7 +93,7 @@ async function refreshToken(req) {
             });
             console.log('token refreshed...');
         }).catch(err => {
-            console.error(err);
+            res.status(500).send(err);
         });
     }, 180000);
 }
@@ -105,16 +104,14 @@ app.get('/action', (req, res) => {
             spotifyClient.next(access_token).then((response) => {
                 res.send(response);
             }).catch(err => {
-                console.log(err);
-                res.send(err);
+                res.status(500).send(err);
             });
             break;
         case 'previous':
             spotifyClient.previous(access_token).then((response) => {
                 res.send(response);
             }).catch(err => {
-                console.log(err);
-                res.send(err);
+                res.status(500).send(err);
             });
             break;
         case 'play':
@@ -122,8 +119,7 @@ app.get('/action', (req, res) => {
                 console.log(responseData.data);
                 res.send(responseData.data || {});
             }).catch(err => {
-                console.log(err);
-                res.send(err);
+                res.status(500).send(err);
             });
             break;
         case 'pause':
@@ -131,7 +127,6 @@ app.get('/action', (req, res) => {
                 console.log(responseData.data);
                 res.send(responseData.data || {});
             }).catch(err => {
-                console.log(err);
                 res.status(500).send(err);
             });
             break;
@@ -139,7 +134,6 @@ app.get('/action', (req, res) => {
             spotifyClient.shuffle(access_token, req.query.status).then(() => {
                 res.send();
             }).catch(err => {
-                console.log(err);
                 res.status(500).send(err);
             });
             break;

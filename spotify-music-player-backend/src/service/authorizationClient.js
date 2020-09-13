@@ -1,11 +1,11 @@
 const axios = require('axios');
 const qs = require('querystring');
-
+const spotifyConf = require('../conf/spotify-conf');
 const client = axios.create({
     baseURL: 'https://accounts.spotify.com'
 });
 
-const clientIdAndClientSecret = new Buffer("d35e8b8c8e1e468f95462ac8aa3d9867:2b5b1bb8d3dc4ad7bbc07da1e768a663");
+const clientIdAndClientSecret = new Buffer(`${spotifyConf.clientId}:${spotifyConf.clientSecret}`);
 
 
 module.exports = {
@@ -15,8 +15,8 @@ module.exports = {
         var data = qs.stringify({
             'grant_type': 'authorization_code',
             'code': code,
-            'client_secret': '2b5b1bb8d3dc4ad7bbc07da1e768a663',
-            'client_id': 'd35e8b8c8e1e468f95462ac8aa3d9867',
+            'client_secret': spotifyConf.clientSecret,
+            'client_id': spotifyConf.clientId,
             'redirect_uri': 'http://localhost:9000/callback/',
            });
         return client.post('/api/token', data);

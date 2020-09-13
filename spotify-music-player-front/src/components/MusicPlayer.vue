@@ -30,7 +30,8 @@
                         <td class="w-25"><i class="fa fa-random"></i></td>
                         <td class="w-25"><i class="fa fa-backward"></i></td>
                         <td class="w-25" v-if="!currentTrack.is_playing"><i class="fa fa-play" v-on:click="play"></i></td>
-                        <td class="col-lg-2" v-if="currentTrack.is_playing"><i class="fa fa-pause" v-on:click="pause"></i></td>                        <td class="w-25"><i class="fa fa-forward"></i></td>
+                        <td class="col-lg-2" v-if="currentTrack.is_playing"><i class="fa fa-pause" v-on:click="pause"></i></td>
+                        <td class="w-25"><i class="fa fa-forward"></i></td>
                         <td class="w-25"><i class="fa fa-repeat"></i></td>
                     </tr>
                 </table>

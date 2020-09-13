@@ -59,7 +59,7 @@
                 <div class="row">
                     <div class="container-fluid">
                         <div class="col-sm-12 main-player-container">
-                            <MusicPlayer />
+                            <MusicPlayer/>
                         </div>
                     </div>
                     <div class="container-fluid" style="margin-top: 0.5em;">

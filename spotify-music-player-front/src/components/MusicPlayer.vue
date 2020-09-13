@@ -30,8 +30,8 @@
                         <td class="w-25"><i class="fa fa-random" v-on:click="shuffle"></i></td>
                         <td class="w-25"><i class="fa fa-backward" v-on:click="previous"></i></td>
                         <td class="w-25" v-if="!currentTrack.is_playing"><i class="fa fa-play" v-on:click="play"></i></td>
-                        <td class="col-lg-2" v-if="currentTrack.is_playing"><i class="fa fa-pause" v-on:click="pause"></i></td>
-                        <td class="w-25"><i class="fa fa-forward"  v-on:click="next"></i></td>
+                        <td class="w-25" v-if="currentTrack.is_playing"><i class="fa fa-pause" v-on:click="pause"></i></td>
+                        <td class="w-25"><i class="fa fa-forward" v-on:click="next"></i></td>
                         <td class="w-25"><i class="fa fa-repeat" v-on:click="repeat"></i></td>
                     </tr>
                 </table>
@@ -46,72 +46,68 @@ import axios from 'axios';
 const backend_url = 'http://localhost:9000'
 
 export default {
-      name: "MusicPlayer",
-      data(){
-          return {
-            currentTrack : {},
-            currentDevice : {},
-          }
-      },
-    created(){
-       this.fetchCurrentTrackRunningOnDevice();
+    name: "MusicPlayer",
+    data() {
+        return {
+            currentTrack: {},
+            currentDevice: {},
+        }
     },
-    methods:{
-        shuffle(){
+    created() {
+        this.fetchCurrentTrackRunningOnDevice();
+    },
+    methods: {
+        shuffle() {
             axios.get(`${backend_url}/action?action=shuffle&status=${!this.currentTrack.shuffle_state}`)
-            .then(() =>{
-                this.fetchCurrentTrackRunningOnDevice()
-            }).catch(() => {
-            });
+                .then(() => {
+                    this.fetchCurrentTrackRunningOnDevice()
+                }).catch(() => {});
         },
-        next(){
+        next() {
             axios.get(`${backend_url}/action?action=next`)
-            .then(() =>{
-                this.fetchCurrentTrackRunningOnDevice()
-            }).catch(() => {
-            });
+                .then(() => {
+                    this.fetchCurrentTrackRunningOnDevice()
+                }).catch(() => {});
         },
-        previous(){
-             axios.get(`${backend_url}/action?action=previous`)
-            .then(() =>{
-                this.fetchCurrentTrackRunningOnDevice()
-            }).catch(() => {
-            });
+        previous() {
+            axios.get(`${backend_url}/action?action=previous`)
+                .then(() => {
+                    this.fetchCurrentTrackRunningOnDevice()
+                }).catch(() => {});
         },
-        play(){
+        play() {
             axios.get(`${backend_url}/action?action=play`)
-            .then(() =>{
-                this.fetchCurrentTrackRunningOnDevice()
-            }).catch(() => {
-            });
+                .then(() => {
+                    this.fetchCurrentTrackRunningOnDevice()
+                }).catch(() => {});
         },
-        pause(){
+        pause() {
             axios.get(`${backend_url}/action?action=pause`)
-            .then(() =>{
-                this.fetchCurrentTrackRunningOnDevice()
-            }).catch(() => {
+                .then(() => {
+                    this.fetchCurrentTrackRunningOnDevice()
+                }).catch(() => {
 
-            });
+                });
         },
-        repeat(){
+        repeat() {
             let repeatState = '';
-            if(this.currentTrack.repeat_state === "off"){
+            if (this.currentTrack.repeat_state === "off") {
                 repeatState = "track";
-            } else{
+            } else {
                 repeatState = "off"
             }
             axios.get(`${backend_url}/action?action=repeat&status=${repeatState}`)
-            .then(() =>{
-                this.fetchCurrentTrackRunningOnDevice()
-            }).catch(() => {
+                .then(() => {
+                    this.fetchCurrentTrackRunningOnDevice()
+                }).catch(() => {
 
-            });
+                });
         },
-        fetchCurrentTrackRunningOnDevice(){
+        fetchCurrentTrackRunningOnDevice() {
             const currentTrackRequest = axios.get(`${backend_url}/currently-playing`);
             const currentDeviceRequest = axios.get(`${backend_url}/current-device`);
 
-            axios.all([currentTrackRequest, currentDeviceRequest]).then(axios.spread((...responses) => { 
+            axios.all([currentTrackRequest, currentDeviceRequest]).then(axios.spread((...responses) => {
                 this.currentTrack = responses[0].data;
                 this.currentDevice = responses[1].data;
             })).catch(() => {

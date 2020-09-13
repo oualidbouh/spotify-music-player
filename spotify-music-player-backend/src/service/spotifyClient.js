@@ -13,6 +13,9 @@ module.exports = {
     getCurrentDevice(access_token){
         return client.get('/v1/me/player/devices', {headers:{'Authorization': `Bearer ${access_token}`}});
     },
+    getTrackCover(access_token,track_id){
+        return client.get('/v1/tracks/' + track_id, {headers:{'Authorization': `Bearer ${access_token}`}});
+    },
     next(access_token){
         return client.post('/v1/me/player/next', {},{headers:{'Authorization': `Bearer ${access_token}`}});
     },

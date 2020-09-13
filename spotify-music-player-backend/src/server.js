@@ -67,6 +67,15 @@ app.get('/current-device', (req, res) => {
     });
 });
 
+app.get('/tracker-cover', (req, res) => {
+    spotifyClient.getTrackCover(access_token, req.query.track_id).then(response => {
+        let cover = _.filter(response.data.album.images, { height: 300, width: 300 })
+        res.send(cover);
+    }).catch(err => {
+        res.status(500).send(res)
+    });
+});
+
 async function refreshToken(req) {
     setInterval(() => {
         authorizationClient.refreshToken(req.session.refresh_token).then((token) => {

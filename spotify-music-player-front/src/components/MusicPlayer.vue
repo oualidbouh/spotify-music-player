@@ -2,7 +2,7 @@
 <div id="muscic-player-container" class="row">
     <div class="row center-bloc">
         <div id="image-container" class="col-lg-4">
-            <img src="http://www.laurentrieppi.com/wp-content/uploads/2011/02/californication1.jpg" id="music-cover">
+            <img :src="coverImage" id="music-cover">
         </div>
         <div class="col-lg-8">
             <div class="col music-player-info">
@@ -51,6 +51,7 @@ export default {
         return {
             currentTrack: {},
             currentDevice: {},
+            coverImage: ''
         }
     },
     created() {
@@ -61,32 +62,40 @@ export default {
             axios.get(`${backend_url}/action?action=shuffle&status=${!this.currentTrack.shuffle_state}`)
                 .then(() => {
                     this.fetchCurrentTrackRunningOnDevice()
-                }).catch(() => {});
+                }).catch(() => {
+                    alert('an error occured, please retry again');
+                });
         },
         next() {
             axios.get(`${backend_url}/action?action=next`)
                 .then(() => {
                     this.fetchCurrentTrackRunningOnDevice()
-                }).catch(() => {});
+                }).catch(() => {
+                    alert('an error occured, please retry again');
+                });
         },
         previous() {
             axios.get(`${backend_url}/action?action=previous`)
                 .then(() => {
                     this.fetchCurrentTrackRunningOnDevice()
-                }).catch(() => {});
+                }).catch(() => {
+                    alert('an error occured, please retry again');
+                });
         },
         play() {
             axios.get(`${backend_url}/action?action=play`)
                 .then(() => {
                     this.fetchCurrentTrackRunningOnDevice()
-                }).catch(() => {});
+                }).catch(() => {
+                    alert('an error occured, please retry again');
+                });
         },
         pause() {
             axios.get(`${backend_url}/action?action=pause`)
                 .then(() => {
                     this.fetchCurrentTrackRunningOnDevice()
                 }).catch(() => {
-
+                    alert('an error occured, please retry again');
                 });
         },
         repeat() {
@@ -100,7 +109,7 @@ export default {
                 .then(() => {
                     this.fetchCurrentTrackRunningOnDevice()
                 }).catch(() => {
-
+                    alert('an error occured, please retry again');
                 });
         },
         fetchCurrentTrackRunningOnDevice() {
@@ -110,8 +119,14 @@ export default {
             axios.all([currentTrackRequest, currentDeviceRequest]).then(axios.spread((...responses) => {
                 this.currentTrack = responses[0].data;
                 this.currentDevice = responses[1].data;
+                axios.get(`${backend_url}/tracker-cover?track_id=${this.currentTrack.item.id}`)
+                .then((res) => {
+                    this.coverImage = res.data[0].url
+                }).catch(() => {
+                    alert('error while fetching track cover');
+                });
             })).catch(() => {
-                console.log('an error occured while fetching data');
+                alert('an error occured while fetching data, please retry again');
             });
         }
     }

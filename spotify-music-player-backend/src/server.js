@@ -29,7 +29,7 @@ app.use(session({
     path: '/'
 }));
 
-app.get('/callback', (req, res) => {
+app.get('/callback', async(req, res) => {
     req.session.code = req.query.code;
     console.log(req.query.code);
     authorizationClient.accessToken(req.query.code).then(token => {

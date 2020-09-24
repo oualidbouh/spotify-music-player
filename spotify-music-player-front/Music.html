@@ -1,219 +1,330 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <title>SmartDisplay</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <link href="css/responsive_background.css" rel="stylesheet">
-    <link href="css/fullscreennavigation.css" rel="stylesheet">
-</head>
-<style>
-    body {
-        height: 100%;
-        margin: 0;
-        font-family: 'Amatic SC', cursive;
-        line-height: normal;
-        background-color: gray;
-    }
-
-    @media (min-width: 768px) {
-        .h-md-100 {
-            height: 100vh;
-        }
-    }
-
-    .btn-round {
-        border-radius: 30px;
-    }
-
-    .text-cyan {
-        color: #35bdff;
-    }
-
-    .p-5 {
-        padding: 0rem !important;
-    }
-
-    .col-md-4 {
-        margin-right: auto;
-        margin-left: auto;
-        padding-bottom: 62.5%;
-        background-position: 50% 50%;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-image: url("Images/Music.jpg");
-    }
-
-    .col-md-2 {
-        padding-right: 0px !important;
-
-    }
-</style>
-<script>
-    var mysrc = "pause.png";
-    function changeImage() {
-        if (mysrc == "pause.png") {
-            document.images["pic"].src = "Images/pause.png";
-            document.images["pic"].alt = "Pause";
-            mysrc = "Play.jpg";
-        } else {
-            document.images["pic"].src = "Images/spielpfeil.png"
-            document.images["pic"].alt = "Play";
-            mysrc = "pause.png";
-        }
-    }
-</script>
-
-<body>
-    <div class="d-md-flex h-md-100 ">
-        <div class="col-md-4 p-0 bg-indigo h-md-100 text-center">
+   <head>
+      <title>SmartDisplay</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+      <link href="css/responsive_background.css" rel="stylesheet">
+      <link href="css/fullscreennavigation.css" rel="stylesheet">
+      <link href="css/style.css" rel="stylesheet">
+      <link href="css/music-player.css" rel="stylesheet">
+   </head>
+   <style>
+      body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Amatic SC', cursive;
+      line-height: normal;
+      background-color: gray;
+      }
+      @media (min-width: 768px) {
+      .h-md-100 {
+      height: 100vh;
+      }
+      }
+      .btn-round {
+      border-radius: 30px;
+      }
+      .text-cyan {
+      color: #35bdff;
+      }
+      .p-5 {
+      padding: 0rem !important;
+      }
+      .col-md-4 {
+      margin-right: auto;
+      margin-left: auto;
+      padding-bottom: 62.5%;
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-image: url("Images/Music.jpg");
+      }
+      .col-md-2 {
+      padding-right: 0px !important;
+      }
+   </style>
+   <script>
+      var mysrc = "pause.png";
+      function changeImage() {
+          if (mysrc == "pause.png") {
+              document.images["pic"].src = "Images/pause.png";
+              document.images["pic"].alt = "Pause";
+              mysrc = "Play.jpg";
+          } else {
+              document.images["pic"].src = "Images/spielpfeil.png"
+              document.images["pic"].alt = "Play";
+              mysrc = "pause.png";
+          }
+      }
+   </script>
+   <body>
+      <div class="d-md-flex h-md-100 ">
+         <div class="col-md-4 p-0 bg-indigo h-md-100 text-center">
             <div class="d-md-flex  h-md-100 p-5 justify-content-center">
-                <div class="logoarea" style="padding: 0rem!important;">
-                    <strong>
-                        <h1 style="color: black; font-size: 4.5em; "> Music </h1>
-                    </strong>
-                </div>
+               <div class="logoarea" style="padding: 0rem!important;">
+                  <strong>
+                     <h1 style="color: black; font-size: 4.5em; "> Music </h1>
+                  </strong>
+               </div>
             </div>
-        </div>
-        <div class="col-md-8 p-0 h-md-100 loginarea">
+         </div>
+         <div class="col-md-8 p-0 h-md-100 loginarea">
             <div class="d-md-flex  h-md-100 p-5 justify-content-center">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div id="myNav" class="overlay">
-                                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                                <div class="overlay-content">
-                                    <div class="container-fluid">
-                                        <div class="row" style="margin-bottom: 2rem;">
-                                            <div class="col-sm-12 text-center">
-                                                <h1 style="color: white; font-size: 3rem;">MENU</h1>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-3"
-                                                style="background-image: url(Images/Bulb.jpg);  background-size: cover; background-repeat: no-repeat; background-position: 50% 50%;">
-                                                <h1 style="color: white;">Light</h1>
-                                            </div>
-                                            <div class="col-sm-3"
-                                                style="background-image: url(Images/Music.jpg);  background-size: cover; background-repeat: no-repeat; background-position: 50% 50%;">
-                                                <h1 style="color: white;">Music</h1>
-                                            </div>
-                                            <div class="col-sm-3"
-                                                style="background-image: url(Images/Picture.jpg);  background-size: cover; background-repeat: no-repeat; background-position: 50% 50%;">
-                                                <h1 style="color: white;">Picture</h1>
-                                            </div>
-                                            <div class="col-sm-3"
-                                                style="background-image: url(Images/ToDo.jpg);  background-size: cover; background-repeat: no-repeat; background-position: 50% 50%;">
-                                                <h1 style="color: white;">ToDo</h1>
-                                            </div>
-                                        </div>
+               <div class="container-fluid">
+                  <div class="row">
+                     <div class="col-md-2">
+                        <div id="myNav" class="overlay">
+                           <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                           <div class="overlay-content">
+                              <div class="container-fluid">
+                                 <div class="row" style="margin-bottom: 2rem;">
+                                    <div class="col-sm-12 text-center">
+                                       <h1 style="color: white; font-size: 3rem;">MENU</h1>
                                     </div>
-                                </div>
-                            </div>
-                            <h1 style="font-size:30px;cursor:pointer; color: white;" onclick="openNav()">
-                                &#9776;Menu</span>
-                                <script>
-                                    function openNav() {
-                                        document.getElementById("myNav").style.height = "100%";
-                                    }
-
-                                    function closeNav() {
-                                        document.getElementById("myNav").style.height = "0%";
-                                    }
-                                </script>
-
-
-                        </div>
-                        <div class="col-md-2" style="text-align-last: right;">
-                            <script>
-                                function startTime() {
-                                    var d = new Date();
-                                    var h = d.getHours();
-                                    var m = d.getMinutes();
-
-                                    m = checkTime(m);
-
-                                    document.getElementById('txt').innerHTML = " " + h + ":" + m;
-                                }
-
-                                function checkTime(i) {
-                                    var j = i;
-                                    if (i < 10) {
-                                        j = "0" + i;
-                                    }
-                                    return j;
-                                }
-
-                                setInterval(function () {
-                                    startTime();
-                                }, 500);
-                            </script>
-                            <strong id="txt" style="font-size: 2rem; color: white;"></strong>
-                        </div>
-
-                        <div class="col-md-8" style="text-align-last: center;">
-                            <strong style="font-size: 2rem; color: white;">
-                                <script>
-                                    function GetDay(intDay) {
-                                        var DayArray = new Array("Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag");
-                                        return DayArray[intDay];
-                                    }
-                                    function GetMonth(intMonth) {
-                                        var MonthArray = new Array("Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember");
-                                        return MonthArray[intMonth];
-                                    }
-                                    function getDateStrWithDOW() {
-                                        var today = new Date();
-                                        var year = today.getYear();
-                                        if (year < 1000) year += 1900
-                                        var todayStr = GetDay(today.getDay()) + " ";
-                                        todayStr += today.getDate() + ". " + GetMonth(today.getMonth());
-                                        todayStr += " " + year;
-                                        return todayStr;
-                                    }
-                                    document.write(" " + getDateStrWithDOW() + " ");
-                                </script>
-                            </strong>
-
-                        </div>
-                    </div>
-                    <div class="row " style="margin: auto">
-                        <div class="container-fluid" style="margin: auto">
-                            <div class="jumbotron"
-                                style="padding: 1rem 1rem !important;  background: rgba(255, 255, 255, 0.5); margin-bottom: 0rem !important; ">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        
-                                        //SPOTIFY WEB PLAYER    
-
-
-
-
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-sm-3"
+                                       style="background-image: url(Images/Bulb.jpg);  background-size: cover; background-repeat: no-repeat; background-position: 50% 50%;">
+                                       <h1 style="color: white;">Light</h1>
                                     </div>
-                                </div>
-                            </div>
+                                    <div class="col-sm-3"
+                                       style="background-image: url(Images/Music.jpg);  background-size: cover; background-repeat: no-repeat; background-position: 50% 50%;">
+                                       <h1 style="color: white;">Music</h1>
+                                    </div>
+                                    <div class="col-sm-3"
+                                       style="background-image: url(Images/Picture.jpg);  background-size: cover; background-repeat: no-repeat; background-position: 50% 50%;">
+                                       <h1 style="color: white;">Picture</h1>
+                                    </div>
+                                    <div class="col-sm-3"
+                                       style="background-image: url(Images/ToDo.jpg);  background-size: cover; background-repeat: no-repeat; background-position: 50% 50%;">
+                                       <h1 style="color: white;">ToDo</h1>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
                         </div>
-                        <div class="container-fluid" style="margin-top: 0.5em;">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <strong style="font-size: 2rem; color: white;">BACK</strong>
-                                </div>
-                            </div>
+                        <h1 style="font-size:30px;cursor:pointer; color: white;" onclick="openNav()">
+                        &#9776;Menu</span>
+                        <script>
+                           function openNav() {
+                               document.getElementById("myNav").style.height = "100%";
+                           }
+                           
+                           function closeNav() {
+                               document.getElementById("myNav").style.height = "0%";
+                           }
+                        </script>
+                     </div>
+                     <div class="col-md-2" style="text-align-last: right;">
+                        <script>
+                           function startTime() {
+                               var d = new Date();
+                               var h = d.getHours();
+                               var m = d.getMinutes();
+                           
+                               m = checkTime(m);
+                           
+                               document.getElementById('txt').innerHTML = " " + h + ":" + m;
+                           }
+                           
+                           function checkTime(i) {
+                               var j = i;
+                               if (i < 10) {
+                                   j = "0" + i;
+                               }
+                               return j;
+                           }
+                           
+                           setInterval(function () {
+                               startTime();
+                           }, 500);
+                        </script>
+                        <strong id="txt" style="font-size: 2rem; color: white;"></strong>
+                     </div>
+                     <div class="col-md-8" style="text-align-last: center;">
+                        <strong style="font-size: 2rem; color: white;">
+                           <script>
+                              function GetDay(intDay) {
+                                  var DayArray = new Array("Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag");
+                                  return DayArray[intDay];
+                              }
+                              function GetMonth(intMonth) {
+                                  var MonthArray = new Array("Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember");
+                                  return MonthArray[intMonth];
+                              }
+                              function getDateStrWithDOW() {
+                                  var today = new Date();
+                                  var year = today.getYear();
+                                  if (year < 1000) year += 1900
+                                  var todayStr = GetDay(today.getDay()) + " ";
+                                  todayStr += today.getDate() + ". " + GetMonth(today.getMonth());
+                                  todayStr += " " + year;
+                                  return todayStr;
+                              }
+                              document.write(" " + getDateStrWithDOW() + " ");
+                           </script>
+                        </strong>
+                     </div>
+                  </div>
+                  <div class="row " style="margin: auto">
+                     <div class="container-fluid" style="margin: auto">
+                        <div class="jumbotron"
+                           style="padding: 1rem 1rem !important;  background: rgba(255, 255, 255, 0.5); margin-bottom: 0rem !important; ">
+                           <div class="row">
+                              <div class="col-sm-12">
+                                 <div id="muscic-player-container" class="row">
+                                    <div class="row center-bloc">
+                                       <div id="image-container" class="col-lg-4">
+                                          <img :src="coverImage" id="music-cover">
+                                       </div>
+                                       <div class="col-lg-8">
+                                          <div class="col music-player-info">
+                                             <table class="music-info">
+                                                <tr>
+                                                   <td colspan="1"><i class="fa fa-music"></i></td>
+                                                   <td colspan="4"><span class="font-weight-bold">{{currentTrack.item.name}}</span></td>
+                                                </tr>
+                                                <tr>
+                                                   <td colspan="1"><i class="fa fa-user"></i></td>
+                                                   <td colspan="4"><span>{{currentTrack.item.album.artists[0].name}}</span></td>
+                                                </tr>
+                                                <tr>
+                                                   <td colspan="1"><i class="fa fa-laptop"></i></td>
+                                                   <td colspan="4"><span>{{currentDevice.name}}</span></td>
+                                                </tr>
+                                                <tr>
+                                                   <td colspan="5">
+                                                      <div class="progress">
+                                                         <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                      </div>
+                                                   </td>
+                                                </tr>
+                                                <tr>
+                                                   <td class="w-25"><i class="fa fa-random" v-on:click="shuffle"></i></td>
+                                                   <td class="w-25"><i class="fa fa-backward" v-on:click="previous"></i></td>
+                                                   <td class="w-25" v-if="!currentTrack.is_playing"><i class="fa fa-play" v-on:click="play"></i></td>
+                                                   <td class="w-25" v-if="currentTrack.is_playing"><i class="fa fa-pause" v-on:click="pause"></i></td>
+                                                   <td class="w-25"><i class="fa fa-forward" v-on:click="next"></i></td>
+                                                   <td class="w-25"><i class="fa fa-repeat" v-on:click="repeat"></i></td>
+                                                </tr>
+                                             </table>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
                         </div>
-                    </div>
-                </div>
+                     </div>
+                     <div class="container-fluid" style="margin-top: 0.5em;">
+                        <div class="row">
+                           <div class="col-sm-12">
+                              <strong style="font-size: 2rem; color: white;">BACK</strong>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
             </div>
-        </div>
-    </div>
-
-    
-</body>
-
+         </div>
+      </div>
+      <script>
+         new Vue(
+             {
+                 el: '#muscic-player-container',
+                 data() {
+                     return {
+                     currentTrack: {},
+                     currentDevice: {},
+                     coverImage: ''
+                 }
+             },
+             created() {
+                 this.fetchCurrentTrackRunningOnDevice();
+             },
+             methods: {
+                 shuffle() {
+                     axios.get(`http://localhost:9000/action?action=shuffle&status=${!this.currentTrack.shuffle_state}`)
+                         .then(() => {
+                             this.fetchCurrentTrackRunningOnDevice()
+                         }).catch(() => {
+                             alert('an error occured, please retry again');
+                         });
+                 },
+             next() {
+                 axios.get(`http://localhost:9000/action?action=next`)
+                     .then(() => {
+                         this.fetchCurrentTrackRunningOnDevice()
+                     }).catch(() => {
+                         alert('an error occured, please retry again');
+                     });
+             },
+             previous() {
+                 axios.get(`http://localhost:9000/action?action=previous`)
+                     .then(() => {
+                         this.fetchCurrentTrackRunningOnDevice()
+                     }).catch(() => {
+                         alert('an error occured, please retry again');
+                     });
+             },
+             play() {
+                 axios.get(`http://localhost:9000/action?action=play`)
+                     .then(() => {
+                         this.fetchCurrentTrackRunningOnDevice()
+                     }).catch(() => {
+                         alert('an error occured, please retry again');
+                     });
+             },
+             pause() {
+                 axios.get(`http://localhost:9000/action?action=pause`)
+                     .then(() => {
+                         this.fetchCurrentTrackRunningOnDevice()
+                     }).catch(() => {
+                         alert('an error occured, please retry again');
+                     });
+             },
+             repeat() {
+                 let repeatState = '';
+                 if (this.currentTrack.repeat_state === "off") {
+                     repeatState = "track";
+                 } else {
+                     repeatState = "off"
+                 }
+                 axios.get(`http://localhost:9000/action?action=repeat&status=${repeatState}`)
+                     .then(() => {
+                         this.fetchCurrentTrackRunningOnDevice()
+                     }).catch(() => {
+                         alert('an error occured, please retry again');
+                     });
+             },
+             fetchCurrentTrackRunningOnDevice() {
+                 const currentTrackRequest = axios.get(`http://localhost:9000/currently-playing`);
+                 const currentDeviceRequest = axios.get(`http://localhost:9000/current-device`);
+         
+                 axios.all([currentTrackRequest, currentDeviceRequest]).then(axios.spread((...responses) => {
+                     this.currentTrack = responses[0].data;
+                     this.currentDevice = responses[1].data;
+                     axios.get(`http://localhost:9000/tracker-cover?track_id=${this.currentTrack.item.id}`)
+                     .then((res) => {
+                         this.coverImage = res.data[0].url
+                     }).catch(() => {
+                         alert('error while fetching track cover');
+                     });
+                 })).catch(() => {
+                     alert('an error occured while fetching data, please retry again');
+                 });
+             }
+         }
+         });
+      </script>
+   </body>
 </html>

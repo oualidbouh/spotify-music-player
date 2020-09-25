@@ -257,7 +257,7 @@
                          .then(() => {
                              this.fetchCurrentTrackRunningOnDevice()
                          }).catch(() => {
-                             alert('an error occured, please retry again');
+                             console.log('an error occured, please retry again');
                          });
                  },
              next() {
@@ -265,7 +265,7 @@
                      .then(() => {
                          this.fetchCurrentTrackRunningOnDevice()
                      }).catch(() => {
-                         alert('an error occured, please retry again');
+                         console.log('an error occured, please retry again');
                      });
              },
              previous() {
@@ -273,7 +273,7 @@
                      .then(() => {
                          this.fetchCurrentTrackRunningOnDevice()
                      }).catch(() => {
-                         alert('an error occured, please retry again');
+                         console.log('an error occured, please retry again');
                      });
              },
              play() {
@@ -281,7 +281,7 @@
                      .then(() => {
                          this.fetchCurrentTrackRunningOnDevice()
                      }).catch(() => {
-                         alert('an error occured, please retry again');
+                         console.log('an error occured, please retry again');
                      });
              },
              pause() {
@@ -289,7 +289,7 @@
                      .then(() => {
                          this.fetchCurrentTrackRunningOnDevice()
                      }).catch(() => {
-                         alert('an error occured, please retry again');
+                         console.log('an error occured, please retry again');
                      });
              },
              repeat() {
@@ -303,7 +303,7 @@
                      .then(() => {
                          this.fetchCurrentTrackRunningOnDevice()
                      }).catch(() => {
-                         alert('an error occured, please retry again');
+                         console.log('an error occured, please retry again');
                      });
              },
              fetchCurrentTrackRunningOnDevice() {
@@ -317,10 +317,10 @@
                      .then((res) => {
                          this.coverImage = res.data[0].url
                      }).catch(() => {
-                         alert('error while fetching track cover');
+                         console.log('error while fetching track cover');
                      });
                  })).catch(() => {
-                     alert('an error occured while fetching data, please retry again');
+                     console.log('an error occured while fetching data, please retry again');
                  });
              }
          }
